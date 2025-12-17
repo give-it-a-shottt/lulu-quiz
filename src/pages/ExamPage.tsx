@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { sampleQuizzes } from "../data/sampleQuizzes";
+import { quizzes } from "../data/quizData";
 
 export default function ExamPage() {
   const { examId } = useParams<{ examId: string }>();
   const navigate = useNavigate();
-  const exam = sampleQuizzes.find((q) => q.id === Number(examId));
+  const exam = quizzes.find((q) => q.id === Number(examId));
 
   const [isStarted, setIsStarted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -116,7 +116,7 @@ export default function ExamPage() {
                 응시번호: {String(examNumber).padStart(4, "0")}
               </div>
             </div>
-            <h1 className="text-base md:text-xl font-bold">{exam.title}</h1>
+            <h1 className="text-base md:text-xl font-bold">{exam.exam_title}</h1>
             <div className="text-right text-xs md:text-sm">
               <div>현재 날짜: {formatDate(currentTime)}</div>
               <div>현재 시각: {formatTime(currentTime)}</div>
@@ -145,7 +145,7 @@ export default function ExamPage() {
                       시험명
                     </td>
                     <td className="py-2 md:py-3 px-2 md:px-4 text-slate-700 text-center">
-                      {exam.title}
+                      {exam.exam_title}
                     </td>
                   </tr>
                   <tr className="border-b border-slate-200">
@@ -215,7 +215,7 @@ export default function ExamPage() {
   if (isSubmitted) {
     const question = exam.questions[solutionQuestionIndex];
     const userAnswer = answers[solutionQuestionIndex];
-    const isCorrect = userAnswer === question.correctAnswer;
+    const isCorrect = userAnswer === question.answer - 1;
 
     return (
       <div className="min-h-screen bg-background flex flex-col">
@@ -247,7 +247,7 @@ export default function ExamPage() {
               <span className="ml-1 md:ml-2 font-bold text-dark">
                 {
                   answers.filter(
-                    (a, i) => a === exam.questions[i].correctAnswer
+                    (a, i) => a === exam.questions[i].answer - 1
                   ).length
                 }
                 /{exam.questions.length}
@@ -287,18 +287,56 @@ export default function ExamPage() {
                   <p className="text-primary text-sm md:text-lg font-semibold">
                     정답 :{" "}
                     <span className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary/10 text-primary font-bold ml-2">
-                      {question.correctAnswer + 1}
+                      {question.answer}
                     </span>
                   </p>
                 </div>
               </div>
 
+              {/* Context (if exists) */}
+              {question.context && (
+                <div className="bg-blue-50 p-3 md:p-4 rounded-xl mb-4 border border-blue-200">
+                  <p className="text-slate-700 text-sm md:text-base whitespace-pre-line leading-relaxed">
+                    {question.context}
+                  </p>
+                </div>
+              )}
+
+              {/* Single Image (if exists) */}
+              {question.image && (
+                <div className="mb-4 flex justify-center">
+                  <img
+                    src={question.image}
+                    alt={`문제 ${solutionQuestionIndex + 1} 이미지`}
+                    className="max-w-full h-auto rounded-lg shadow-md"
+                  />
+                </div>
+              )}
+
+              {/* Multiple Images (if exists) */}
+              {question.images && question.images.length > 0 && (
+                <div className="mb-4 grid grid-cols-2 md:grid-cols-5 gap-3">
+                  {question.images.map((img, idx) => (
+                    <div key={idx} className="flex flex-col items-center">
+                      <img
+                        src={img}
+                        alt={`선택지 ${idx + 1}`}
+                        className="w-full h-auto rounded-lg shadow-md border-2 border-slate-200"
+                      />
+                      <span className="mt-2 font-bold text-slate-700">{["①", "②", "③", "④", "⑤"][idx]}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {/* Explanation Box */}
-              <div className="bg-slate-50 p-3 md:p-4 rounded-xl mb-4 border border-slate-200">
-                <p className="text-slate-700 text-sm md:text-base whitespace-pre-line leading-relaxed">
-                  {question.explanation}
-                </p>
-              </div>
+              {question.explanation && (
+                <div className="bg-slate-50 p-3 md:p-4 rounded-xl mb-4 border border-slate-200">
+                  <p className="text-slate-700 text-sm md:text-base whitespace-pre-line leading-relaxed">
+                    {question.explanation}
+                  </p>
+                </div>
+              )}
 
               {/* Options */}
               <div className="space-y-2 mb-6">
@@ -306,7 +344,7 @@ export default function ExamPage() {
                   <div
                     key={optIndex}
                     className={`p-2 md:p-3 rounded-xl border-2 transition-all ${
-                      optIndex === question.correctAnswer
+                      optIndex === question.answer - 1
                         ? "bg-primary/5 border-primary"
                         : "border-slate-200"
                     }`}>
@@ -341,7 +379,7 @@ export default function ExamPage() {
               <div className="space-y-3">
                 {exam.questions.map((q, qIndex) => {
                   const qUserAnswer = answers[qIndex];
-                  const qIsCorrect = qUserAnswer === q.correctAnswer;
+                  const qIsCorrect = qUserAnswer === q.answer - 1;
 
                   return (
                     <div
@@ -365,10 +403,10 @@ export default function ExamPage() {
                             key={optIndex}
                             className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
                               qUserAnswer === optIndex
-                                ? optIndex === q.correctAnswer
+                                ? optIndex === q.answer - 1
                                   ? "bg-primary border-primary"
                                   : "bg-red-500 border-red-500"
-                                : optIndex === q.correctAnswer
+                                : optIndex === q.answer - 1
                                 ? "border-primary/60 text-primary/60"
                                 : "border-white/30"
                             }`}>
@@ -417,7 +455,7 @@ export default function ExamPage() {
               <div className="space-y-3">
                 {exam.questions.map((q, qIndex) => {
                   const qUserAnswer = answers[qIndex];
-                  const qIsCorrect = qUserAnswer === q.correctAnswer;
+                  const qIsCorrect = qUserAnswer === q.answer - 1;
 
                   return (
                     <div
@@ -444,10 +482,10 @@ export default function ExamPage() {
                             key={optIndex}
                             className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
                               qUserAnswer === optIndex
-                                ? optIndex === q.correctAnswer
+                                ? optIndex === q.answer - 1
                                   ? "bg-primary border-primary"
                                   : "bg-red-500 border-red-500"
-                                : optIndex === q.correctAnswer
+                                : optIndex === q.answer - 1
                                 ? "border-primary/60 text-primary/60"
                                 : "border-white/30"
                             }`}>
@@ -548,7 +586,7 @@ export default function ExamPage() {
                 응시번호: {String(examNumber).padStart(4, "0")}
               </div>
             </div>
-            <h1 className="text-base md:text-xl font-bold">{exam.title}</h1>
+            <h1 className="text-base md:text-xl font-bold">{exam.exam_title}</h1>
             <div className="text-right text-xs md:text-sm">
               <div>현재 날짜: {formatDate(currentTime)}</div>
               <div>현재 시각: {formatTime(currentTime)}</div>
@@ -819,6 +857,42 @@ export default function ExamPage() {
               <h2 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-gray-800">
                 {currentQuestionIndex + 1}. {currentQuestion.question}
               </h2>
+
+              {/* Context (if exists) */}
+              {currentQuestion.context && (
+                <div className="bg-slate-50 p-3 md:p-4 rounded-xl mb-4 border border-slate-200">
+                  <p className="text-slate-700 text-sm md:text-base whitespace-pre-line leading-relaxed">
+                    {currentQuestion.context}
+                  </p>
+                </div>
+              )}
+
+              {/* Single Image (if exists) */}
+              {currentQuestion.image && (
+                <div className="mb-4 md:mb-6 flex justify-center">
+                  <img
+                    src={currentQuestion.image}
+                    alt={`문제 ${currentQuestionIndex + 1} 이미지`}
+                    className="max-w-full h-auto rounded-lg shadow-md"
+                  />
+                </div>
+              )}
+
+              {/* Multiple Images (if exists) - for option images */}
+              {currentQuestion.images && currentQuestion.images.length > 0 && (
+                <div className="mb-4 md:mb-6 grid grid-cols-2 md:grid-cols-5 gap-3">
+                  {currentQuestion.images.map((img, idx) => (
+                    <div key={idx} className="flex flex-col items-center">
+                      <img
+                        src={img}
+                        alt={`선택지 ${idx + 1}`}
+                        className="w-full h-auto rounded-lg shadow-md border-2 border-slate-200"
+                      />
+                      <span className="mt-2 font-bold text-slate-700">{["①", "②", "③", "④", "⑤"][idx]}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Options */}
               <div className="space-y-2 md:space-y-3">

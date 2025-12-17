@@ -1,16 +1,19 @@
 export interface Question {
-  id: number;
+  number: number;
   question: string;
+  context?: string;
   options: string[];
-  correctAnswer: number;
-  explanation: string;
+  answer: number;
+  image?: string;
+  images?: string[];
+  explanation?: string;
 }
 
 export interface Exam {
-  id: number;
-  title: string;
-  year: string;
-  session: number;
+  exam_title: string;
+  institution: string;
+  total_questions: number;
+  theory_questions: number;
+  practical_questions: number;
   questions: Question[];
-  duration: number;
 }

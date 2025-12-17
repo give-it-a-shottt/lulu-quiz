@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { sampleQuizzes } from "../data/sampleQuizzes";
+import { quizzes } from "../data/quizData";
 
 export default function HomePage() {
   return (
@@ -24,17 +24,17 @@ export default function HomePage() {
         </div>
 
         <div className="space-y-3 md:space-y-4">
-          {sampleQuizzes.map((quiz) => (
+          {quizzes.map((quiz) => (
             <div
               key={quiz.id}
               className="bg-white rounded-xl md:rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 border border-slate-200">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
                 <div className="flex-1">
                   <h3 className="text-lg md:text-xl font-bold text-dark mb-1">
-                    {quiz.title}
+                    {quiz.exam_title}
                   </h3>
                   <p className="text-xs md:text-sm text-slate-500">
-                    {quiz.questions.length}문항 · {quiz.duration}분
+                    {quiz.total_questions}문항 (필기 {quiz.theory_questions}문항 + 실기 {quiz.practical_questions}문항) · {quiz.duration}분
                   </p>
                 </div>
 

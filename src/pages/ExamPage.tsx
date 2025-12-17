@@ -373,7 +373,8 @@ export default function ExamPage() {
                   return (
                     <div
                       key={qIndex}
-                      className={`flex items-center gap-3 p-2 rounded-lg transition-all ${
+                      onClick={() => setSolutionQuestionIndex(qIndex)}
+                      className={`flex items-center gap-3 p-2 rounded-lg transition-all cursor-pointer hover:bg-white/5 ${
                         solutionQuestionIndex === qIndex ? "bg-white/10" : ""
                       }`}>
                       <div
@@ -387,9 +388,8 @@ export default function ExamPage() {
                       </div>
                       <div className="flex gap-2">
                         {[0, 1, 2, 3, 4].map((optIndex) => (
-                          <button
+                          <div
                             key={optIndex}
-                            onClick={() => setSolutionQuestionIndex(qIndex)}
                             className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
                               qUserAnswer === optIndex
                                 ? optIndex === q.correctAnswer
@@ -397,10 +397,10 @@ export default function ExamPage() {
                                   : "bg-red-500 border-red-500"
                                 : optIndex === q.correctAnswer
                                 ? "border-primary/60 text-primary/60"
-                                : "border-white/30 hover:border-white/50"
+                                : "border-white/30"
                             }`}>
                             {optIndex + 1}
-                          </button>
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -842,7 +842,8 @@ export default function ExamPage() {
             {exam.questions.map((_, qIndex) => (
               <div
                 key={qIndex}
-                className={`flex items-center gap-3 p-2 rounded-lg transition-all ${
+                onClick={() => setCurrentQuestionIndex(qIndex)}
+                className={`flex items-center gap-3 p-2 rounded-lg transition-all cursor-pointer hover:bg-white/5 ${
                   currentQuestionIndex === qIndex ? "bg-white/10" : ""
                 }`}>
                 <div className="w-12 text-right font-bold">
@@ -850,19 +851,15 @@ export default function ExamPage() {
                 </div>
                 <div className="flex gap-2">
                   {[0, 1, 2, 3, 4].map((optIndex) => (
-                    <button
+                    <div
                       key={optIndex}
-                      onClick={() => {
-                        setCurrentQuestionIndex(qIndex);
-                        handleAnswerSelect(optIndex);
-                      }}
                       className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
                         answers[qIndex] === optIndex
                           ? "bg-primary border-primary"
                           : "border-white/30 hover:border-white/50"
                       }`}>
                       {optIndex + 1}
-                    </button>
+                    </div>
                   ))}
                 </div>
               </div>

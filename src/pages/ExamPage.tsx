@@ -25,6 +25,8 @@ export default function ExamPage() {
   const [showEndScreen, setShowEndScreen] = useState(false);
   const [solutionQuestionIndex, setSolutionQuestionIndex] = useState(0);
   const [showExplanationModal, setShowExplanationModal] = useState(false);
+  const [showAnswerSheet, setShowAnswerSheet] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     if (!exam || !isStarted) return;
@@ -53,9 +55,9 @@ export default function ExamPage() {
 
   if (!exam) {
     return (
-      <div className="min-h-screen bg-primary flex items-center justify-center">
+      <div className="min-h-screen bg-primary flex items-center justify-center px-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">
             시험을 찾을 수 없습니다
           </h1>
           <button
@@ -104,20 +106,18 @@ export default function ExamPage() {
     return (
       <div className="min-h-screen bg-background">
         {/* Header */}
-        <div className="bg-dark text-white py-4 shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <div className="bg-primary rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">
+        <div className="bg-dark text-white py-3 md:py-4 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="bg-primary rounded-full w-8 h-8 md:w-12 md:h-12 flex items-center justify-center font-bold text-sm md:text-xl">
                 01
               </div>
-              <div>
-                <div className="text-sm">
-                  응시번호: {String(examNumber).padStart(4, "0")}
-                </div>
+              <div className="text-xs md:text-sm">
+                응시번호: {String(examNumber).padStart(4, "0")}
               </div>
             </div>
-            <h1 className="text-xl font-bold">{exam.title}</h1>
-            <div className="text-right text-sm">
+            <h1 className="text-base md:text-xl font-bold">{exam.title}</h1>
+            <div className="text-right text-xs md:text-sm">
               <div>현재 날짜: {formatDate(currentTime)}</div>
               <div>현재 시각: {formatTime(currentTime)}</div>
             </div>
@@ -125,50 +125,50 @@ export default function ExamPage() {
         </div>
 
         {/* Main Content */}
-        <main className="max-w-4xl mx-auto px-4 py-12">
-          <div className="bg-white rounded-2xl shadow-xl p-12 border border-slate-200">
-            <h2 className="text-3xl font-bold text-center mb-8 text-dark">
+        <main className="max-w-4xl mx-auto px-4 py-6 md:py-12">
+          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-12 border border-slate-200">
+            <h2 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-8 text-dark">
               응시하기 버튼을 클릭하면 시험이 시작됩니다.
             </h2>
 
-            <p className="text-center text-slate-600 mb-8">
+            <p className="text-center text-sm md:text-base text-slate-600 mb-6 md:mb-8">
               실제 자격증 시험에서는 시작시간에
               <br />
               맞추어 자동으로 시험이 시작됩니다.
             </p>
 
-            <div className="bg-slate-50 rounded-xl p-6 mb-8 border border-slate-200">
-              <table className="w-full">
+            <div className="bg-slate-50 rounded-xl p-4 md:p-6 mb-6 md:mb-8 border border-slate-200">
+              <table className="w-full text-sm md:text-base">
                 <tbody>
                   <tr className="border-b border-slate-200">
-                    <td className="py-3 px-4 font-semibold text-dark text-center bg-slate-100">
+                    <td className="py-2 md:py-3 px-2 md:px-4 font-semibold text-dark text-center bg-slate-100">
                       시험명
                     </td>
-                    <td className="py-3 px-4 text-slate-700 text-center">
+                    <td className="py-2 md:py-3 px-2 md:px-4 text-slate-700 text-center">
                       {exam.title}
                     </td>
                   </tr>
                   <tr className="border-b border-slate-200">
-                    <td className="py-3 px-4 font-semibold text-dark text-center bg-slate-100">
+                    <td className="py-2 md:py-3 px-2 md:px-4 font-semibold text-dark text-center bg-slate-100">
                       교시
                     </td>
-                    <td className="py-3 px-4 text-slate-700 text-center">
+                    <td className="py-2 md:py-3 px-2 md:px-4 text-slate-700 text-center">
                       1교시
                     </td>
                   </tr>
                   <tr className="border-b border-slate-200">
-                    <td className="py-3 px-4 font-semibold text-dark text-center bg-slate-100">
+                    <td className="py-2 md:py-3 px-2 md:px-4 font-semibold text-dark text-center bg-slate-100">
                       시작 시간
                     </td>
-                    <td className="py-3 px-4 text-slate-700 text-center">
+                    <td className="py-2 md:py-3 px-2 md:px-4 text-slate-700 text-center">
                       09:00
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-semibold text-dark text-center bg-slate-100">
+                    <td className="py-2 md:py-3 px-2 md:px-4 font-semibold text-dark text-center bg-slate-100">
                       종료 시간
                     </td>
-                    <td className="py-3 px-4 text-slate-700 text-center">
+                    <td className="py-2 md:py-3 px-2 md:px-4 text-slate-700 text-center">
                       10:30
                     </td>
                   </tr>
@@ -179,7 +179,7 @@ export default function ExamPage() {
             <div className="flex justify-center">
               <button
                 onClick={() => setIsStarted(true)}
-                className="bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-12 rounded-xl text-lg transition-all duration-200 shadow-lg hover:shadow-xl">
+                className="bg-primary hover:bg-[#0284C7] text-white font-bold py-3 md:py-4 px-8 md:px-12 rounded-xl text-base md:text-lg transition-all duration-200 shadow-lg hover:shadow-xl">
                 시험 응시하기
               </button>
             </div>
@@ -220,31 +220,31 @@ export default function ExamPage() {
     return (
       <div className="min-h-screen bg-background flex flex-col">
         {/* Header */}
-        <div className="bg-dark text-white py-3 px-6 shadow-lg">
+        <div className="bg-dark text-white py-2 md:py-3 px-4 md:px-6 shadow-lg">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="bg-primary rounded-full w-10 h-10 flex items-center justify-center font-bold">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="bg-primary rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold text-sm">
                 01
               </div>
-              <div className="text-sm">
+              <div className="text-xs md:text-sm">
                 <div>응시번호: {String(examNumber).padStart(4, "0")}</div>
-                <div>성명: 정성훈</div>
+                <div className="hidden md:block">성명: 정성훈</div>
               </div>
             </div>
-            <h1 className="text-xl font-bold">{exam.title}</h1>
-            <div className="text-right text-sm">
-              <div>현재 날짜: {formatDate(currentTime)}</div>
-              <div>현재 시각: {formatTime(currentTime)}</div>
+            <h1 className="text-sm md:text-xl font-bold">{exam.title}</h1>
+            <div className="text-right text-xs md:text-sm">
+              <div className="hidden md:block">현재 날짜: {formatDate(currentTime)}</div>
+              <div>시각: {formatTime(currentTime)}</div>
             </div>
           </div>
         </div>
 
         {/* Stats Bar */}
-        <div className="bg-white border-b border-slate-200 py-3 px-6 shadow-sm">
-          <div className="flex justify-center gap-8">
+        <div className="bg-white border-b border-slate-200 py-2 md:py-3 px-4 md:px-6 shadow-sm">
+          <div className="flex justify-center gap-4 md:gap-8 text-xs md:text-base">
             <div className="text-center">
               <span className="text-slate-600 font-medium">필기</span>
-              <span className="ml-2 font-bold text-dark">
+              <span className="ml-1 md:ml-2 font-bold text-dark">
                 {
                   answers.filter(
                     (a, i) => a === exam.questions[i].correctAnswer
@@ -255,13 +255,13 @@ export default function ExamPage() {
             </div>
             <div className="text-center">
               <span className="text-slate-600 font-medium">실기</span>
-              <span className="ml-2 font-bold text-dark">0/45</span>
+              <span className="ml-1 md:ml-2 font-bold text-dark">0/45</span>
             </div>
             <div className="text-center">
               <span className="text-slate-600 font-medium">합격여부</span>
-              <span className="ml-2 font-bold text-red-600">불합격</span>
+              <span className="ml-1 md:ml-2 font-bold text-red-600">불합격</span>
             </div>
-            <div className="text-center">
+            <div className="text-center hidden md:block">
               <span className="text-slate-600 font-medium">과락</span>
               <span className="ml-2 font-bold text-dark">필기, 실기</span>
             </div>
@@ -271,22 +271,22 @@ export default function ExamPage() {
         {/* Main Content */}
         <div className="flex flex-1 overflow-hidden">
           {/* Left: Question Content */}
-          <div className="flex-1 px-6 py-4 overflow-y-auto bg-white mx-80">
+          <div className="flex-1 px-4 md:px-6 lg:px-80 py-4 overflow-y-auto bg-white">
             <div>
-              <div className="flex items-start gap-4 mb-4">
+              <div className="flex items-start gap-2 md:gap-4 mb-4">
                 <div
-                  className={`text-7xl shrink-0 ${
+                  className={`text-4xl md:text-7xl shrink-0 ${
                     isCorrect ? "text-primary" : "text-red-500"
                   }`}>
                   {isCorrect ? "○" : "✕"}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3 text-dark">
+                  <h3 className="text-base md:text-xl font-bold mb-2 md:mb-3 text-dark">
                     {solutionQuestionIndex + 1}. {question.question}
                   </h3>
-                  <p className="text-primary text-lg font-semibold">
+                  <p className="text-primary text-sm md:text-lg font-semibold">
                     정답 :{" "}
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold ml-2">
+                    <span className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary/10 text-primary font-bold ml-2">
                       {question.correctAnswer + 1}
                     </span>
                   </p>
@@ -294,8 +294,8 @@ export default function ExamPage() {
               </div>
 
               {/* Explanation Box */}
-              <div className="bg-slate-50 p-4 rounded-xl mb-4 border border-slate-200">
-                <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+              <div className="bg-slate-50 p-3 md:p-4 rounded-xl mb-4 border border-slate-200">
+                <p className="text-slate-700 text-sm md:text-base whitespace-pre-line leading-relaxed">
                   {question.explanation}
                 </p>
               </div>
@@ -305,12 +305,12 @@ export default function ExamPage() {
                 {question.options.map((option, optIndex) => (
                   <div
                     key={optIndex}
-                    className={`p-3 rounded-xl border-2 transition-all ${
+                    className={`p-2 md:p-3 rounded-xl border-2 transition-all ${
                       optIndex === question.correctAnswer
                         ? "bg-primary/5 border-primary"
                         : "border-slate-200"
                     }`}>
-                    <span className="text-slate-800">
+                    <span className="text-slate-800 text-sm md:text-base">
                       <span className="font-bold mr-2">
                         {["①", "②", "③", "④", "⑤"][optIndex]}
                       </span>
@@ -324,42 +324,15 @@ export default function ExamPage() {
               <div>
                 <button
                   onClick={() => setShowExplanationModal(true)}
-                  className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
+                  className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm md:text-base">
                   문제 해설보기
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Explanation Modal */}
-          {showExplanationModal && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full p-8 border border-slate-200">
-                <h2 className="text-2xl font-bold text-center mb-6 text-dark">
-                  문제 해설
-                </h2>
-
-                <div className="mb-6">
-                  <h3 className="text-lg font-bold text-dark mb-3">표준교재 38P</h3>
-                  <div className="text-slate-700 leading-relaxed space-y-2 bg-slate-50 p-4 rounded-xl">
-                    <p>1.지역사회 보살핌과 보호를 받아야 한다. 건강 보호 서비스를 이용할 수 있어야 한다.</p>
-                    <p>2.사회에 통합, 봉사 기회 얻고 개별, 사회운동 및 단체 조직</p>
-                    <p>3.목체적, 정신적 학대로부터 자유로워야 한다. 공정하게 대우받아야한다.</p>
-                    <p>5.착취적 계발할 수 있는 기회가 있어야 한다.</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setShowExplanationModal(false)}
-                  className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
-                  확인
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Right: Answer Sheet Sidebar */}
-          <div className="w-96 bg-dark text-white flex flex-col shadow-xl">
+          {/* Right: Answer Sheet Sidebar - Hidden on mobile, shown on desktop */}
+          <div className="hidden lg:flex w-96 bg-dark text-white flex-col shadow-xl">
             <div className="p-6 flex-1 overflow-y-auto">
               <h3 className="text-center font-bold text-lg mb-6 pb-3 border-b border-white/20">
                 답안 표기란
@@ -420,18 +393,125 @@ export default function ExamPage() {
           </div>
         </div>
 
+        {/* Mobile Answer Sheet Button */}
+        <button
+          onClick={() => setShowAnswerSheet(true)}
+          className="lg:hidden fixed bottom-20 right-4 bg-dark text-white p-4 rounded-full shadow-2xl z-40">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        {/* Mobile Answer Sheet Modal */}
+        {showAnswerSheet && (
+          <div className="lg:hidden fixed inset-0 bg-dark text-white z-50 flex flex-col">
+            <div className="p-4 border-b border-white/20 flex justify-between items-center">
+              <h3 className="font-bold text-lg">답안 표기란</h3>
+              <button
+                onClick={() => setShowAnswerSheet(false)}
+                className="text-2xl">
+                ×
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+              <div className="space-y-3">
+                {exam.questions.map((q, qIndex) => {
+                  const qUserAnswer = answers[qIndex];
+                  const qIsCorrect = qUserAnswer === q.correctAnswer;
+
+                  return (
+                    <div
+                      key={qIndex}
+                      onClick={() => {
+                        setSolutionQuestionIndex(qIndex);
+                        setShowAnswerSheet(false);
+                      }}
+                      className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
+                        solutionQuestionIndex === qIndex ? "bg-white/10" : "bg-white/5"
+                      }`}>
+                      <div
+                        className={`text-2xl ${
+                          qIsCorrect ? "text-primary" : "text-red-400"
+                        }`}>
+                        {qIsCorrect ? "○" : "✕"}
+                      </div>
+                      <div className="w-10 text-right font-bold">
+                        {qIndex + 1}
+                      </div>
+                      <div className="flex gap-2">
+                        {[0, 1, 2, 3, 4].map((optIndex) => (
+                          <div
+                            key={optIndex}
+                            className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
+                              qUserAnswer === optIndex
+                                ? optIndex === q.correctAnswer
+                                  ? "bg-primary border-primary"
+                                  : "bg-red-500 border-red-500"
+                                : optIndex === q.correctAnswer
+                                ? "border-primary/60 text-primary/60"
+                                : "border-white/30"
+                            }`}>
+                            {optIndex + 1}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="p-4 border-t border-white/20">
+              <button
+                onClick={() => {
+                  setShowAnswerSheet(false);
+                  navigate("/");
+                }}
+                className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
+                다시 풀기
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Explanation Modal */}
+        {showExplanationModal && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full p-6 md:p-8 border border-slate-200 max-h-[90vh] overflow-y-auto">
+              <h2 className="text-xl md:text-2xl font-bold text-center mb-4 md:mb-6 text-dark">
+                문제 해설
+              </h2>
+
+              <div className="mb-4 md:mb-6">
+                <h3 className="text-base md:text-lg font-bold text-dark mb-3">표준교재 38P</h3>
+                <div className="text-slate-700 text-sm md:text-base leading-relaxed space-y-2 bg-slate-50 p-4 rounded-xl">
+                  <p>1.지역사회 보살핌과 보호를 받아야 한다. 건강 보호 서비스를 이용할 수 있어야 한다.</p>
+                  <p>2.사회에 통합, 봉사 기회 얻고 개별, 사회운동 및 단체 조직</p>
+                  <p>3.목체적, 정신적 학대로부터 자유로워야 한다. 공정하게 대우받아야한다.</p>
+                  <p>5.착취적 계발할 수 있는 기회가 있어야 한다.</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowExplanationModal(false)}
+                className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm md:text-base">
+                확인
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Bottom Navigation */}
-        <div className="bg-white border-t border-slate-200 py-4 shadow-lg">
-          <div className="flex items-center justify-center gap-8">
+        <div className="bg-white border-t border-slate-200 py-3 md:py-4 shadow-lg">
+          <div className="flex items-center justify-center gap-4 md:gap-8">
             <button
               onClick={() =>
                 setSolutionQuestionIndex((prev) => Math.max(0, prev - 1))
               }
               disabled={solutionQuestionIndex === 0}
-              className="px-6 py-2 text-dark hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed font-bold text-lg transition-colors">
+              className="px-4 md:px-6 py-2 text-dark hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg transition-colors">
               ◀ 이전
             </button>
-            <span className="text-xl font-bold text-dark">
+            <span className="text-base md:text-xl font-bold text-dark">
               {String(solutionQuestionIndex + 1).padStart(2, "0")}/
               {String(exam.questions.length).padStart(2, "0")}
             </span>
@@ -442,7 +522,7 @@ export default function ExamPage() {
                 )
               }
               disabled={solutionQuestionIndex === exam.questions.length - 1}
-              className="px-6 py-2 text-dark hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed font-bold text-lg transition-colors">
+              className="px-4 md:px-6 py-2 text-dark hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg transition-colors">
               다음 ▶
             </button>
           </div>
@@ -458,20 +538,18 @@ export default function ExamPage() {
     return (
       <div className="min-h-screen bg-background">
         {/* Header */}
-        <div className="bg-dark text-white py-4 shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <div className="bg-primary rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl">
+        <div className="bg-dark text-white py-3 md:py-4 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="bg-primary rounded-full w-8 h-8 md:w-12 md:h-12 flex items-center justify-center font-bold text-sm md:text-xl">
                 01
               </div>
-              <div>
-                <div className="text-sm">
-                  응시번호: {String(examNumber).padStart(4, "0")}
-                </div>
+              <div className="text-xs md:text-sm">
+                응시번호: {String(examNumber).padStart(4, "0")}
               </div>
             </div>
-            <h1 className="text-xl font-bold">{exam.title}</h1>
-            <div className="text-right text-sm">
+            <h1 className="text-base md:text-xl font-bold">{exam.title}</h1>
+            <div className="text-right text-xs md:text-sm">
               <div>현재 날짜: {formatDate(currentTime)}</div>
               <div>현재 시각: {formatTime(currentTime)}</div>
             </div>
@@ -479,42 +557,42 @@ export default function ExamPage() {
         </div>
 
         {/* Main Content */}
-        <main className="max-w-4xl mx-auto px-4 py-12">
-          <div className="bg-white rounded-2xl shadow-xl p-12 border border-slate-200">
-            <h2 className="text-3xl font-bold text-center mb-8 text-dark">
+        <main className="max-w-4xl mx-auto px-4 py-6 md:py-12">
+          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-12 border border-slate-200">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8 text-dark">
               교시 종료 대기
             </h2>
 
-            <p className="text-center text-xl font-bold text-dark mb-4">
+            <p className="text-center text-lg md:text-xl font-bold text-dark mb-4">
               수고하셨습니다.
               <br />
               작성하신 답안이 정상적으로 제출되었습니다.
             </p>
 
-            <p className="text-center text-slate-600 mb-2">
+            <p className="text-center text-sm md:text-base text-slate-600 mb-2">
               교시 종료 시까지 자리에서 대기해주세요
             </p>
 
-            <p className="text-center text-primary mb-2 font-semibold">
+            <p className="text-center text-primary text-sm md:text-base mb-2 font-semibold">
               시험시간 내에서는 언제든지 문제풀이 화면으로 되돌아가실 수
               있습니다.
             </p>
 
-            <p className="text-center text-red-600 font-bold mb-8">
+            <p className="text-center text-red-600 font-bold mb-6 md:mb-8 text-sm md:text-base">
               시험 종료 버튼을 누르시면 접수와 해답을 확인하실 수 있습니다.
             </p>
 
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4">
               {hasTimeLeft && (
                 <button
                   onClick={handleBackToExam}
-                  className="bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                  className="bg-primary hover:bg-[#0284C7] text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg transition-all duration-200 shadow-md hover:shadow-lg">
                   시험 보러 가기
                 </button>
               )}
               <button
                 onClick={handleFinalSubmit}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg transition-all duration-200 shadow-md hover:shadow-lg">
                 시험종료 해답보기
               </button>
             </div>
@@ -528,12 +606,12 @@ export default function ExamPage() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Submit Confirmation Modal */}
       {showSubmitConfirm && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 border border-slate-200">
-            <h2 className="text-2xl font-bold text-center mb-6 text-dark">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-md w-full border border-slate-200">
+            <h2 className="text-xl md:text-2xl font-bold text-center mb-4 md:mb-6 text-dark">
               알림
             </h2>
-            <p className="text-center text-slate-700 mb-2">
+            <p className="text-center text-slate-700 mb-2 text-sm md:text-base">
               안 푼 문제가{" "}
               <span className="font-bold text-primary">
                 {exam.questions.length -
@@ -541,18 +619,18 @@ export default function ExamPage() {
               </span>
               개 남아 있습니다.
             </p>
-            <p className="text-center text-slate-700 mb-8">
+            <p className="text-center text-slate-700 mb-6 md:mb-8 text-sm md:text-base">
               그래도 답안을 제출하시겠습니까?
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-3 md:gap-4">
               <button
                 onClick={() => setShowSubmitConfirm(false)}
-                className="flex-1 bg-slate-200 hover:bg-slate-300 text-dark font-bold py-3 px-6 rounded-xl transition-all">
+                className="flex-1 bg-slate-200 hover:bg-slate-300 text-dark font-bold py-2 md:py-3 px-4 md:px-6 rounded-xl transition-all text-sm md:text-base">
                 취소
               </button>
               <button
                 onClick={handleConfirmSubmit}
-                className="flex-1 bg-primary hover:bg-[#0284C7] text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg">
+                className="flex-1 bg-primary hover:bg-[#0284C7] text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-xl transition-all shadow-md hover:shadow-lg text-sm md:text-base">
                 답안 제출
               </button>
             </div>
@@ -560,26 +638,113 @@ export default function ExamPage() {
         </div>
       )}
 
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-slate-200">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold text-dark">설정</h2>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="text-2xl text-slate-400 hover:text-slate-600">
+                ×
+              </button>
+            </div>
+
+            {/* Font Size Controls */}
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-slate-600 mb-3">글자 크기</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setFontSize("small")}
+                  className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
+                    fontSize === "small" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                  }`}>
+                  작게
+                  <br />
+                  80%
+                </button>
+                <button
+                  onClick={() => setFontSize("medium")}
+                  className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
+                    fontSize === "medium" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                  }`}>
+                  보통
+                  <br />
+                  100%
+                </button>
+                <button
+                  onClick={() => setFontSize("large")}
+                  className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
+                    fontSize === "large" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                  }`}>
+                  크게
+                  <br />
+                  125%
+                </button>
+              </div>
+            </div>
+
+            {/* Layout Controls - Only show on desktop */}
+            <div className="hidden md:block mb-6">
+              <h3 className="text-sm font-semibold text-slate-600 mb-3">화면 보기</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setViewMode("single")}
+                  className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
+                    viewMode === "single" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                  }`}>
+                  1문 보기
+                </button>
+                <button
+                  onClick={() => setViewMode("double")}
+                  className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
+                    viewMode === "double" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                  }`}>
+                  2칸 보기
+                </button>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowSettings(false)}
+              className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 rounded-xl transition-all">
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
-      <div className="bg-dark text-white py-3 px-6 shadow-lg">
+      <div className="bg-dark text-white py-2 md:py-3 px-3 md:px-6 shadow-lg">
         <div className="flex justify-between items-center">
           {/* Left: Exam Number */}
-          <div className="flex items-center gap-3">
-            <div className="bg-primary rounded-full w-10 h-10 flex items-center justify-center font-bold">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="bg-primary rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold text-sm">
               01
             </div>
-            <div className="text-sm">
+            <div className="text-xs md:text-sm">
               <div>응시번호: {String(examNumber).padStart(4, "0")}</div>
             </div>
           </div>
 
           {/* Center: Title */}
-          <h1 className="text-xl font-bold">{exam.title}</h1>
+          <h1 className="text-xs md:text-xl font-bold truncate max-w-[120px] md:max-w-none">{exam.title}</h1>
 
           {/* Right: Controls and Time */}
-          <div className="flex items-center gap-6">
-            {/* Font Size Controls */}
-            <div className="flex gap-2 text-sm">
+          <div className="flex items-center gap-2 md:gap-6">
+            {/* Settings Button (Mobile) */}
+            <button
+              onClick={() => setShowSettings(true)}
+              className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-all">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+
+            {/* Font Size Controls (Desktop) */}
+            <div className="hidden md:flex gap-2 text-sm">
               <button
                 onClick={() => setFontSize("large")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
@@ -609,8 +774,8 @@ export default function ExamPage() {
               </button>
             </div>
 
-            {/* Layout Controls */}
-            <div className="flex gap-2 text-sm">
+            {/* Layout Controls (Desktop) */}
+            <div className="hidden md:flex gap-2 text-sm">
               <button
                 onClick={() => setViewMode("single")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
@@ -628,11 +793,10 @@ export default function ExamPage() {
             </div>
 
             {/* Time */}
-            <div className="text-right text-sm">
-              <div>현재 시각: {formatTime(currentTime)}</div>
+            <div className="text-right text-xs md:text-sm">
+              <div className="hidden md:block">현재 시각: {formatTime(currentTime)}</div>
               <div className="text-red-400 font-bold">
-                남은 시간: {String(minutes).padStart(2, "0")}분{" "}
-                {String(seconds).padStart(2, "0")}초
+                {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
               </div>
             </div>
           </div>
@@ -640,40 +804,40 @@ export default function ExamPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden">
         {/* Question Area */}
-        <div className={`flex-1 p-8 overflow-auto bg-white ${getFontSizeClass()}`}>
-          {viewMode === "single" ? (
-            // Single Question View
+        <div className={`flex-1 p-4 md:p-8 overflow-auto bg-white ${getFontSizeClass()}`}>
+          {viewMode === "single" || window.innerWidth < 768 ? (
+            // Single Question View (Always on mobile)
             <div className="max-w-4xl mx-auto">
               {/* Instruction */}
-              <p className="text-green-600 font-medium mb-6">
+              <p className="text-green-600 font-medium mb-4 md:mb-6 text-sm md:text-base">
                 가장 적합한 답 하나만 고르시오
               </p>
 
               {/* Question */}
-              <h2 className="text-xl font-bold mb-6 text-gray-800">
+              <h2 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-gray-800">
                 {currentQuestionIndex + 1}. {currentQuestion.question}
               </h2>
 
               {/* Options */}
-              <div className="space-y-3">
+              <div className="space-y-2 md:space-y-3">
                 {currentQuestion.options.map((option, index) => (
                   <button
                     key={index}
                     onClick={() => handleAnswerSelect(index)}
-                    className="w-full text-left flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors">
+                    className="w-full text-left flex items-center gap-3 p-3 md:p-4 hover:bg-gray-50 transition-colors rounded-lg active:bg-gray-100">
                     <div
-                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                      className={`w-6 h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center shrink-0 ${
                         answers[currentQuestionIndex] === index
                           ? "border-gray-800"
                           : "border-gray-400"
                       }`}>
                       {answers[currentQuestionIndex] === index && (
-                        <div className="w-4 h-4 rounded-full bg-gray-800"></div>
+                        <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-800"></div>
                       )}
                     </div>
-                    <span className="text-gray-700">
+                    <span className="text-gray-700 text-sm md:text-base">
                       <span className="font-medium mr-2">
                         {["①", "②", "③", "④", "⑤"][index]}
                       </span>
@@ -684,16 +848,16 @@ export default function ExamPage() {
               </div>
 
               {/* Navigation */}
-              <div className="mt-12 flex justify-center items-center gap-4">
+              <div className="mt-8 md:mt-12 flex justify-center items-center gap-4">
                 <button
                   onClick={() =>
                     setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))
                   }
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed">
+                  className="px-4 md:px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base">
                   &lt; 이전
                 </button>
-                <span className="text-lg font-bold text-gray-800">
+                <span className="text-base md:text-lg font-bold text-gray-800">
                   {String(currentQuestionIndex + 1).padStart(2, "0")}/
                   {String(exam.questions.length).padStart(2, "0")}
                 </span>
@@ -704,13 +868,13 @@ export default function ExamPage() {
                     )
                   }
                   disabled={currentQuestionIndex === exam.questions.length - 1}
-                  className="px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed">
+                  className="px-4 md:px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base">
                   다음 &gt;
                 </button>
               </div>
             </div>
           ) : (
-            // Double Question View
+            // Double Question View (Desktop only)
             <div className="max-w-7xl mx-auto">
               <p className="text-green-600 font-medium mb-6">
                 가장 적합한 답 하나만 고르시오
@@ -832,8 +996,8 @@ export default function ExamPage() {
           )}
         </div>
 
-        {/* Answer Sheet Sidebar */}
-        <div className="w-96 bg-dark text-white p-6 overflow-auto shadow-xl">
+        {/* Answer Sheet Sidebar (Desktop only) */}
+        <div className="hidden lg:block w-96 bg-dark text-white p-6 overflow-auto shadow-xl">
           <h3 className="text-center font-bold text-lg mb-6 pb-3 border-b border-white/20">
             답안 표기란
           </h3>
@@ -870,10 +1034,87 @@ export default function ExamPage() {
           <button
             onClick={handleSubmit}
             className="w-full mt-8 bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
-            💾 답안 제출
+            답안 제출
           </button>
         </div>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <div className="lg:hidden bg-white border-t border-slate-200 py-3 px-4 shadow-lg flex items-center justify-between">
+        <button
+          onClick={() => setShowAnswerSheet(true)}
+          className="bg-dark text-white px-4 py-2 rounded-lg font-semibold text-sm">
+          답안 표기란
+        </button>
+        <span className="text-sm font-bold text-gray-800">
+          {String(currentQuestionIndex + 1).padStart(2, "0")}/
+          {String(exam.questions.length).padStart(2, "0")}
+        </span>
+        <button
+          onClick={handleSubmit}
+          className="bg-primary text-white px-4 py-2 rounded-lg font-semibold text-sm">
+          답안 제출
+        </button>
+      </div>
+
+      {/* Mobile Answer Sheet Modal */}
+      {showAnswerSheet && (
+        <div className="lg:hidden fixed inset-0 bg-dark text-white z-50 flex flex-col">
+          <div className="p-4 border-b border-white/20 flex justify-between items-center">
+            <h3 className="font-bold text-lg">답안 표기란</h3>
+            <button
+              onClick={() => setShowAnswerSheet(false)}
+              className="text-3xl leading-none">
+              ×
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-3">
+              {exam.questions.map((_, qIndex) => (
+                <div
+                  key={qIndex}
+                  onClick={() => {
+                    setCurrentQuestionIndex(qIndex);
+                    setShowAnswerSheet(false);
+                  }}
+                  className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
+                    currentQuestionIndex === qIndex ? "bg-white/10" : "bg-white/5"
+                  }`}>
+                  <div className="w-12 text-right font-bold">
+                    {String(qIndex + 1).padStart(2, "0")}
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {[0, 1, 2, 3, 4].map((optIndex) => (
+                      <div
+                        key={optIndex}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const newAnswers = [...answers];
+                          newAnswers[qIndex] = optIndex;
+                          setAnswers(newAnswers);
+                        }}
+                        className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
+                          answers[qIndex] === optIndex
+                            ? "bg-primary border-primary"
+                            : "border-white/30 active:border-white/70"
+                        }`}>
+                        {optIndex + 1}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="p-4 border-t border-white/20">
+            <button
+              onClick={() => setShowAnswerSheet(false)}
+              className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 rounded-xl transition-all">
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

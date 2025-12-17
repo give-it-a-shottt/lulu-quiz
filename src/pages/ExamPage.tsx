@@ -116,7 +116,9 @@ export default function ExamPage() {
                 응시번호: {String(examNumber).padStart(4, "0")}
               </div>
             </div>
-            <h1 className="text-base md:text-xl font-bold">{exam.exam_title}</h1>
+            <h1 className="text-base md:text-xl font-bold">
+              {exam.exam_title}
+            </h1>
             <div className="text-right text-xs md:text-sm">
               <div>현재 날짜: {formatDate(currentTime)}</div>
               <div>현재 시각: {formatTime(currentTime)}</div>
@@ -231,9 +233,11 @@ export default function ExamPage() {
                 <div className="hidden md:block">성명: 정성훈</div>
               </div>
             </div>
-            <h1 className="text-sm md:text-xl font-bold">{exam.title}</h1>
+            <h1 className="text-sm md:text-xl font-bold">{exam.exam_title}</h1>
             <div className="text-right text-xs md:text-sm">
-              <div className="hidden md:block">현재 날짜: {formatDate(currentTime)}</div>
+              <div className="hidden md:block">
+                현재 날짜: {formatDate(currentTime)}
+              </div>
               <div>시각: {formatTime(currentTime)}</div>
             </div>
           </div>
@@ -246,9 +250,8 @@ export default function ExamPage() {
               <span className="text-slate-600 font-medium">필기</span>
               <span className="ml-1 md:ml-2 font-bold text-dark">
                 {
-                  answers.filter(
-                    (a, i) => a === exam.questions[i].answer - 1
-                  ).length
+                  answers.filter((a, i) => a === exam.questions[i].answer - 1)
+                    .length
                 }
                 /{exam.questions.length}
               </span>
@@ -259,7 +262,9 @@ export default function ExamPage() {
             </div>
             <div className="text-center">
               <span className="text-slate-600 font-medium">합격여부</span>
-              <span className="ml-1 md:ml-2 font-bold text-red-600">불합격</span>
+              <span className="ml-1 md:ml-2 font-bold text-red-600">
+                불합격
+              </span>
             </div>
             <div className="text-center hidden md:block">
               <span className="text-slate-600 font-medium">과락</span>
@@ -317,13 +322,43 @@ export default function ExamPage() {
               {question.images && question.images.length > 0 && (
                 <div className="mb-4 grid grid-cols-2 md:grid-cols-5 gap-3">
                   {question.images.map((img, idx) => (
-                    <div key={idx} className="flex flex-col items-center">
+                    <div
+                      key={idx}
+                      className={`flex flex-col items-center p-2 rounded-lg transition-all ${
+                        idx === question.answer - 1
+                          ? 'ring-4 ring-primary bg-primary/5'
+                          : userAnswer === idx
+                          ? 'ring-4 ring-red-500 bg-red-50'
+                          : ''
+                      }`}>
                       <img
                         src={img}
                         alt={`선택지 ${idx + 1}`}
-                        className="w-full h-auto rounded-lg shadow-md border-2 border-slate-200"
+                        className={`w-full h-auto rounded-lg shadow-md border-2 transition-all ${
+                          idx === question.answer - 1
+                            ? 'border-primary'
+                            : userAnswer === idx
+                            ? 'border-red-500'
+                            : 'border-slate-200'
+                        }`}
                       />
-                      <span className="mt-2 font-bold text-slate-700">{["①", "②", "③", "④", "⑤"][idx]}</span>
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className={`font-bold ${
+                          idx === question.answer - 1
+                            ? 'text-primary'
+                            : userAnswer === idx
+                            ? 'text-red-500'
+                            : 'text-slate-700'
+                        }`}>
+                          {["①", "②", "③", "④", "⑤"][idx]}
+                        </span>
+                        {idx === question.answer - 1 && (
+                          <span className="text-primary font-bold">✓</span>
+                        )}
+                        {userAnswer === idx && idx !== question.answer - 1 && (
+                          <span className="text-red-500 font-bold">✕</span>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -338,7 +373,8 @@ export default function ExamPage() {
                 </div>
               )}
 
-              {/* Options */}
+              {/* Options (only show if no images) */}
+              {(!question.images || question.images.length === 0) && (
               <div className="space-y-2 mb-6">
                 {question.options.map((option, optIndex) => (
                   <div
@@ -357,6 +393,7 @@ export default function ExamPage() {
                   </div>
                 ))}
               </div>
+              )}
 
               {/* Video Button */}
               <div>
@@ -435,8 +472,17 @@ export default function ExamPage() {
         <button
           onClick={() => setShowAnswerSheet(true)}
           className="lg:hidden fixed bottom-20 right-4 bg-dark text-white p-4 rounded-full shadow-2xl z-40">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
 
@@ -465,7 +511,9 @@ export default function ExamPage() {
                         setShowAnswerSheet(false);
                       }}
                       className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
-                        solutionQuestionIndex === qIndex ? "bg-white/10" : "bg-white/5"
+                        solutionQuestionIndex === qIndex
+                          ? "bg-white/10"
+                          : "bg-white/5"
                       }`}>
                       <div
                         className={`text-2xl ${
@@ -520,11 +568,21 @@ export default function ExamPage() {
               </h2>
 
               <div className="mb-4 md:mb-6">
-                <h3 className="text-base md:text-lg font-bold text-dark mb-3">표준교재 38P</h3>
+                <h3 className="text-base md:text-lg font-bold text-dark mb-3">
+                  표준교재 38P
+                </h3>
                 <div className="text-slate-700 text-sm md:text-base leading-relaxed space-y-2 bg-slate-50 p-4 rounded-xl">
-                  <p>1.지역사회 보살핌과 보호를 받아야 한다. 건강 보호 서비스를 이용할 수 있어야 한다.</p>
-                  <p>2.사회에 통합, 봉사 기회 얻고 개별, 사회운동 및 단체 조직</p>
-                  <p>3.목체적, 정신적 학대로부터 자유로워야 한다. 공정하게 대우받아야한다.</p>
+                  <p>
+                    1.지역사회 보살핌과 보호를 받아야 한다. 건강 보호 서비스를
+                    이용할 수 있어야 한다.
+                  </p>
+                  <p>
+                    2.사회에 통합, 봉사 기회 얻고 개별, 사회운동 및 단체 조직
+                  </p>
+                  <p>
+                    3.목체적, 정신적 학대로부터 자유로워야 한다. 공정하게
+                    대우받아야한다.
+                  </p>
                   <p>5.착취적 계발할 수 있는 기회가 있어야 한다.</p>
                 </div>
               </div>
@@ -586,7 +644,9 @@ export default function ExamPage() {
                 응시번호: {String(examNumber).padStart(4, "0")}
               </div>
             </div>
-            <h1 className="text-base md:text-xl font-bold">{exam.exam_title}</h1>
+            <h1 className="text-base md:text-xl font-bold">
+              {exam.exam_title}
+            </h1>
             <div className="text-right text-xs md:text-sm">
               <div>현재 날짜: {formatDate(currentTime)}</div>
               <div>현재 시각: {formatTime(currentTime)}</div>
@@ -641,7 +701,7 @@ export default function ExamPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Submit Confirmation Modal */}
       {showSubmitConfirm && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -691,12 +751,16 @@ export default function ExamPage() {
 
             {/* Font Size Controls */}
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-slate-600 mb-3">글자 크기</h3>
+              <h3 className="text-sm font-semibold text-slate-600 mb-3">
+                글자 크기
+              </h3>
               <div className="flex gap-2">
                 <button
                   onClick={() => setFontSize("small")}
                   className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
-                    fontSize === "small" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                    fontSize === "small"
+                      ? "bg-primary text-white"
+                      : "bg-slate-100 text-slate-700"
                   }`}>
                   작게
                   <br />
@@ -705,7 +769,9 @@ export default function ExamPage() {
                 <button
                   onClick={() => setFontSize("medium")}
                   className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
-                    fontSize === "medium" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                    fontSize === "medium"
+                      ? "bg-primary text-white"
+                      : "bg-slate-100 text-slate-700"
                   }`}>
                   보통
                   <br />
@@ -714,7 +780,9 @@ export default function ExamPage() {
                 <button
                   onClick={() => setFontSize("large")}
                   className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
-                    fontSize === "large" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                    fontSize === "large"
+                      ? "bg-primary text-white"
+                      : "bg-slate-100 text-slate-700"
                   }`}>
                   크게
                   <br />
@@ -725,19 +793,25 @@ export default function ExamPage() {
 
             {/* Layout Controls - Only show on desktop */}
             <div className="hidden md:block mb-6">
-              <h3 className="text-sm font-semibold text-slate-600 mb-3">화면 보기</h3>
+              <h3 className="text-sm font-semibold text-slate-600 mb-3">
+                화면 보기
+              </h3>
               <div className="flex gap-2">
                 <button
                   onClick={() => setViewMode("single")}
                   className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
-                    viewMode === "single" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                    viewMode === "single"
+                      ? "bg-primary text-white"
+                      : "bg-slate-100 text-slate-700"
                   }`}>
                   1문 보기
                 </button>
                 <button
                   onClick={() => setViewMode("double")}
                   className={`flex-1 px-4 py-3 rounded-lg font-bold transition-all ${
-                    viewMode === "double" ? "bg-primary text-white" : "bg-slate-100 text-slate-700"
+                    viewMode === "double"
+                      ? "bg-primary text-white"
+                      : "bg-slate-100 text-slate-700"
                   }`}>
                   2칸 보기
                 </button>
@@ -767,7 +841,9 @@ export default function ExamPage() {
           </div>
 
           {/* Center: Title */}
-          <h1 className="text-xs md:text-xl font-bold truncate max-w-[120px] md:max-w-none">{exam.title}</h1>
+          <h1 className="text-xs md:text-xl font-bold truncate max-w-[120px] md:max-w-none">
+            {exam.exam_title}
+          </h1>
 
           {/* Right: Controls and Time */}
           <div className="flex items-center gap-2 md:gap-6">
@@ -775,9 +851,23 @@ export default function ExamPage() {
             <button
               onClick={() => setShowSettings(true)}
               className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-all">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
               </svg>
             </button>
 
@@ -786,7 +876,9 @@ export default function ExamPage() {
               <button
                 onClick={() => setFontSize("large")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                  fontSize === "large" ? "bg-primary" : "bg-white/10 hover:bg-white/20"
+                  fontSize === "large"
+                    ? "bg-primary"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}>
                 크게
                 <br />
@@ -795,7 +887,9 @@ export default function ExamPage() {
               <button
                 onClick={() => setFontSize("medium")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                  fontSize === "medium" ? "bg-primary" : "bg-white/10 hover:bg-white/20"
+                  fontSize === "medium"
+                    ? "bg-primary"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}>
                 크기
                 <br />
@@ -804,7 +898,9 @@ export default function ExamPage() {
               <button
                 onClick={() => setFontSize("small")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                  fontSize === "small" ? "bg-primary" : "bg-white/10 hover:bg-white/20"
+                  fontSize === "small"
+                    ? "bg-primary"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}>
                 작게
                 <br />
@@ -817,14 +913,18 @@ export default function ExamPage() {
               <button
                 onClick={() => setViewMode("single")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                  viewMode === "single" ? "bg-primary" : "bg-white/10 hover:bg-white/20"
+                  viewMode === "single"
+                    ? "bg-primary"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}>
                 1문 보기
               </button>
               <button
                 onClick={() => setViewMode("double")}
                 className={`px-3 py-1 rounded-lg font-bold transition-all ${
-                  viewMode === "double" ? "bg-primary" : "bg-white/10 hover:bg-white/20"
+                  viewMode === "double"
+                    ? "bg-primary"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}>
                 2칸 보기
               </button>
@@ -832,9 +932,12 @@ export default function ExamPage() {
 
             {/* Time */}
             <div className="text-right text-xs md:text-sm">
-              <div className="hidden md:block">현재 시각: {formatTime(currentTime)}</div>
+              <div className="hidden md:block">
+                현재 시각: {formatTime(currentTime)}
+              </div>
               <div className="text-red-400 font-bold">
-                {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+                {String(minutes).padStart(2, "0")}:
+                {String(seconds).padStart(2, "0")}
               </div>
             </div>
           </div>
@@ -844,7 +947,8 @@ export default function ExamPage() {
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Question Area */}
-        <div className={`flex-1 p-4 md:p-8 overflow-auto bg-white ${getFontSizeClass()}`}>
+        <div
+          className={`flex-1 p-4 md:p-8 overflow-auto bg-white ${getFontSizeClass()}`}>
           {viewMode === "single" || window.innerWidth < 768 ? (
             // Single Question View (Always on mobile)
             <div className="max-w-4xl mx-auto">
@@ -882,19 +986,37 @@ export default function ExamPage() {
               {currentQuestion.images && currentQuestion.images.length > 0 && (
                 <div className="mb-4 md:mb-6 grid grid-cols-2 md:grid-cols-5 gap-3">
                   {currentQuestion.images.map((img, idx) => (
-                    <div key={idx} className="flex flex-col items-center">
+                    <button
+                      key={idx}
+                      onClick={() => handleAnswerSelect(idx)}
+                      className={`flex flex-col items-center p-2 rounded-lg transition-all ${
+                        answers[currentQuestionIndex] === idx
+                          ? 'ring-4 ring-primary bg-primary/5'
+                          : 'hover:bg-gray-50'
+                      }`}>
                       <img
                         src={img}
                         alt={`선택지 ${idx + 1}`}
-                        className="w-full h-auto rounded-lg shadow-md border-2 border-slate-200"
+                        className={`w-full h-auto rounded-lg shadow-md border-2 transition-all ${
+                          answers[currentQuestionIndex] === idx
+                            ? 'border-primary'
+                            : 'border-slate-200'
+                        }`}
                       />
-                      <span className="mt-2 font-bold text-slate-700">{["①", "②", "③", "④", "⑤"][idx]}</span>
-                    </div>
+                      <div className={`mt-2 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-all ${
+                        answers[currentQuestionIndex] === idx
+                          ? 'border-gray-800 bg-gray-800 text-white'
+                          : 'border-gray-400 text-gray-700'
+                      }`}>
+                        {["①", "②", "③", "④", "⑤"][idx]}
+                      </div>
+                    </button>
                   ))}
                 </div>
               )}
 
-              {/* Options */}
+              {/* Options (only show if no images) */}
+              {(!currentQuestion.images || currentQuestion.images.length === 0) && (
               <div className="space-y-2 md:space-y-3">
                 {currentQuestion.options.map((option, index) => (
                   <button
@@ -920,6 +1042,7 @@ export default function ExamPage() {
                   </button>
                 ))}
               </div>
+              )}
 
               {/* Navigation */}
               <div className="mt-8 md:mt-12 flex justify-center items-center gap-4">
@@ -1071,12 +1194,15 @@ export default function ExamPage() {
         </div>
 
         {/* Answer Sheet Sidebar (Desktop only) */}
-        <div className="hidden lg:block w-96 bg-dark text-white p-6 overflow-auto shadow-xl">
-          <h3 className="text-center font-bold text-lg mb-6 pb-3 border-b border-white/20">
-            답안 표기란
-          </h3>
+        <div className="hidden lg:flex lg:flex-col w-96 bg-dark text-white shadow-xl">
+          <div className="p-6 pb-3">
+            <h3 className="text-center font-bold text-lg pb-3 border-b border-white/20">
+              답안 표기란
+            </h3>
+          </div>
 
-          <div className="space-y-3">
+          <div className="flex-1 overflow-y-auto px-6 pb-6">
+            <div className="space-y-3">
             {exam.questions.map((_, qIndex) => (
               <div
                 key={qIndex}
@@ -1102,14 +1228,17 @@ export default function ExamPage() {
                 </div>
               </div>
             ))}
+            </div>
           </div>
 
           {/* Submit Button */}
-          <button
-            onClick={handleSubmit}
-            className="w-full mt-8 bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
-            답안 제출
-          </button>
+          <div className="p-6 pt-0">
+            <button
+              onClick={handleSubmit}
+              className="w-full mt-8 bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
+              답안 제출
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1152,7 +1281,9 @@ export default function ExamPage() {
                     setShowAnswerSheet(false);
                   }}
                   className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
-                    currentQuestionIndex === qIndex ? "bg-white/10" : "bg-white/5"
+                    currentQuestionIndex === qIndex
+                      ? "bg-white/10"
+                      : "bg-white/5"
                   }`}>
                   <div className="w-12 text-right font-bold">
                     {String(qIndex + 1).padStart(2, "0")}

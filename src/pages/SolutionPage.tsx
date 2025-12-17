@@ -64,18 +64,40 @@ export default function SolutionPage() {
               {question.images && question.images.length > 0 && (
                 <div className="mb-6 grid grid-cols-2 md:grid-cols-5 gap-3">
                   {question.images.map((img, idx) => (
-                    <div key={idx} className="flex flex-col items-center">
+                    <div
+                      key={idx}
+                      className={`flex flex-col items-center p-2 rounded-lg ${
+                        idx === question.answer - 1
+                          ? 'ring-4 ring-green-500 bg-green-50'
+                          : ''
+                      }`}>
                       <img
                         src={img}
                         alt={`선택지 ${idx + 1}`}
-                        className="w-full h-auto rounded-lg shadow-md border-2 border-slate-200"
+                        className={`w-full h-auto rounded-lg shadow-md border-2 ${
+                          idx === question.answer - 1
+                            ? 'border-green-500'
+                            : 'border-slate-200'
+                        }`}
                       />
-                      <span className="mt-2 font-bold text-slate-700">{["①", "②", "③", "④", "⑤"][idx]}</span>
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className={`font-bold ${
+                          idx === question.answer - 1
+                            ? 'text-green-600'
+                            : 'text-slate-700'
+                        }`}>
+                          {["①", "②", "③", "④", "⑤"][idx]}
+                        </span>
+                        {idx === question.answer - 1 && (
+                          <span className="text-green-600 font-bold">✓ 정답</span>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
 
+              {(!question.images || question.images.length === 0) && (
               <div className="space-y-3 mb-6">
                 {question.options.map((option, optionIndex) => (
                   <div
@@ -97,6 +119,7 @@ export default function SolutionPage() {
                   </div>
                 ))}
               </div>
+              )}
 
               {question.explanation && (
                 <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">

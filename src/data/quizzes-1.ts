@@ -635,11 +635,11 @@ export const quiz1: Exam = {
       question:
         "다음 그림에서 등과 넙다리 근육의 휴식을 위해 타월이나 베개를 받쳐 주는 위치로 옳은 것은?",
       images: [
-        "../public/images/quiz-1-52-1.png",
-        "../public/images/quiz-1-52-2.png",
-        "../public/images/quiz-1-52-3.png",
-        "../public/images/quiz-1-52-4.png",
-        "../public/images/quiz-1-52-5.png",
+        "/images/quiz-1-52-1.webp",
+        "/images/quiz-1-52-2.webp",
+        "/images/quiz-1-52-3.webp",
+        "/images/quiz-1-52-4.webp",
+        "/images/quiz-1-52-5.webp",
       ],
       options: ["①", "②", "③", "④", "⑤"],
       answer: 3,
@@ -687,7 +687,7 @@ export const quiz1: Exam = {
       number: 56,
       question:
         "복지용구 중에서 다음 그림과 같은 목욕리프트에 대한 설명으로 옳은 것은?",
-      image: "../public/images/quiz-1-56.png",
+      image: "/images/quiz-1-56.webp",
       options: [
         "등받이가 고정된 것이 안전한다.",
         "최대한 무게가 가벼운 것을 선택한다.",
@@ -748,7 +748,7 @@ export const quiz1: Exam = {
     {
       number: 61,
       question: "다음 그림의 세탁표시에 따른 세탁 방법을 옳게 설명한 것은?",
-      image: "../public/images/quiz-1-61.png",
+      image: "/images/quiz-1-61.webp",
       context: "(약하게 표시)",
       options: [
         "손으로 약하게 짬",

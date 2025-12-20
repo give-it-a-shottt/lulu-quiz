@@ -246,30 +246,54 @@ export default function ExamPage() {
         {/* Stats Bar */}
         <div className="bg-white border-b border-slate-200 py-2 md:py-3 px-4 md:px-6 shadow-sm">
           <div className="flex justify-center gap-4 md:gap-8 text-xs md:text-base">
-            <div className="text-center">
-              <span className="text-slate-600 font-medium">필기</span>
-              <span className="ml-1 md:ml-2 font-bold text-dark">
-                {
-                  answers.filter((a, i) => a === exam.questions[i].answer - 1)
-                    .length
-                }
-                /{exam.questions.length}
-              </span>
-            </div>
-            <div className="text-center">
-              <span className="text-slate-600 font-medium">실기</span>
-              <span className="ml-1 md:ml-2 font-bold text-dark">0/45</span>
-            </div>
-            <div className="text-center">
-              <span className="text-slate-600 font-medium">합격여부</span>
-              <span className="ml-1 md:ml-2 font-bold text-red-600">
-                불합격
-              </span>
-            </div>
-            <div className="text-center hidden md:block">
-              <span className="text-slate-600 font-medium">과락</span>
-              <span className="ml-2 font-bold text-dark">필기, 실기</span>
-            </div>
+            {(() => {
+              // Calculate theory score (questions 1-35, indices 0-34)
+              const theoryCorrect = answers.filter((a, i) => i <= 34 && a === exam.questions[i].answer - 1).length;
+              const theoryTotal = 35;
+              const theoryPass = theoryCorrect >= 21; // 60% of 35
+
+              // Calculate practical score (questions 36-80, indices 35-79)
+              const practicalCorrect = answers.filter((a, i) => i >= 35 && a === exam.questions[i].answer - 1).length;
+              const practicalTotal = 45;
+              const practicalPass = practicalCorrect >= 27; // 60% of 45
+
+              // Determine overall pass/fail
+              const overallPass = theoryPass && practicalPass;
+
+              // Determine which sections failed
+              const failedSections = [];
+              if (!theoryPass) failedSections.push('필기');
+              if (!practicalPass) failedSections.push('실기');
+
+              return (
+                <>
+                  <div className="text-center">
+                    <span className="text-slate-600 font-medium">필기</span>
+                    <span className={`ml-1 md:ml-2 font-bold ${theoryPass ? 'text-primary' : 'text-red-600'}`}>
+                      {theoryCorrect}/{theoryTotal}
+                    </span>
+                  </div>
+                  <div className="text-center">
+                    <span className="text-slate-600 font-medium">실기</span>
+                    <span className={`ml-1 md:ml-2 font-bold ${practicalPass ? 'text-primary' : 'text-red-600'}`}>
+                      {practicalCorrect}/{practicalTotal}
+                    </span>
+                  </div>
+                  <div className="text-center">
+                    <span className="text-slate-600 font-medium">합격여부</span>
+                    <span className={`ml-1 md:ml-2 font-bold ${overallPass ? 'text-green-600' : 'text-red-600'}`}>
+                      {overallPass ? '합격' : '불합격'}
+                    </span>
+                  </div>
+                  <div className="text-center hidden md:block">
+                    <span className="text-slate-600 font-medium">과락</span>
+                    <span className="ml-2 font-bold text-dark">
+                      {failedSections.length > 0 ? failedSections.join(', ') : '없음'}
+                    </span>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </div>
 
@@ -331,17 +355,19 @@ export default function ExamPage() {
                           ? 'ring-4 ring-red-500 bg-red-50'
                           : ''
                       }`}>
-                      <img
-                        src={img}
-                        alt={`선택지 ${idx + 1}`}
-                        className={`w-full h-auto rounded-lg shadow-md border-2 transition-all ${
-                          idx === question.answer - 1
-                            ? 'border-primary'
-                            : userAnswer === idx
-                            ? 'border-red-500'
-                            : 'border-slate-200'
-                        }`}
-                      />
+                      <div className="w-full aspect-square">
+                        <img
+                          src={img}
+                          alt={`선택지 ${idx + 1}`}
+                          className={`w-full h-full object-contain rounded-lg shadow-md border-2 transition-all ${
+                            idx === question.answer - 1
+                              ? 'border-primary'
+                              : userAnswer === idx
+                              ? 'border-red-500'
+                              : 'border-slate-200'
+                          }`}
+                        />
+                      </div>
                       <div className="mt-2 flex items-center gap-2">
                         <span className={`font-bold ${
                           idx === question.answer - 1
@@ -994,15 +1020,17 @@ export default function ExamPage() {
                           ? 'ring-4 ring-primary bg-primary/5'
                           : 'hover:bg-gray-50'
                       }`}>
-                      <img
-                        src={img}
-                        alt={`선택지 ${idx + 1}`}
-                        className={`w-full h-auto rounded-lg shadow-md border-2 transition-all ${
-                          answers[currentQuestionIndex] === idx
-                            ? 'border-primary'
-                            : 'border-slate-200'
-                        }`}
-                      />
+                      <div className="w-full aspect-square">
+                        <img
+                          src={img}
+                          alt={`선택지 ${idx + 1}`}
+                          className={`w-full h-full object-contain rounded-lg shadow-md border-2 transition-all ${
+                            answers[currentQuestionIndex] === idx
+                              ? 'border-primary'
+                              : 'border-slate-200'
+                          }`}
+                        />
+                      </div>
                       <div className={`mt-2 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-all ${
                         answers[currentQuestionIndex] === idx
                           ? 'border-gray-800 bg-gray-800 text-white'

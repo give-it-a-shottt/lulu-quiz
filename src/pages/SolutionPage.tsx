@@ -71,15 +71,17 @@ export default function SolutionPage() {
                           ? 'ring-4 ring-green-500 bg-green-50'
                           : ''
                       }`}>
-                      <img
-                        src={img}
-                        alt={`선택지 ${idx + 1}`}
-                        className={`w-full h-auto rounded-lg shadow-md border-2 ${
-                          idx === question.answer - 1
-                            ? 'border-green-500'
-                            : 'border-slate-200'
-                        }`}
-                      />
+                      <div className="w-full aspect-square">
+                        <img
+                          src={img}
+                          alt={`선택지 ${idx + 1}`}
+                          className={`w-full h-full object-contain rounded-lg shadow-md border-2 ${
+                            idx === question.answer - 1
+                              ? 'border-green-500'
+                              : 'border-slate-200'
+                          }`}
+                        />
+                      </div>
                       <div className="mt-2 flex items-center gap-2">
                         <span className={`font-bold ${
                           idx === question.answer - 1

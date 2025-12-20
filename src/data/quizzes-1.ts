@@ -648,7 +648,7 @@ export const quiz1: Exam = {
       number: 53,
       question:
         "다음 그림과 같이 가파른 내리막길에서 휠체어를 타고 있는 대상자를 이동시키는 방법으로 옳은 것은?",
-      image: "/images/quiz-1-53.png",
+      image: "/images/quiz-1-53.webp",
       options: [
         "휠체어를 뒤로 돌려 지그재그로 내려간다.",
         "휠체어를 뒤로 돌려 앞바퀴를 들고 내려간다.",
@@ -749,7 +749,6 @@ export const quiz1: Exam = {
       number: 61,
       question: "다음 그림의 세탁표시에 따른 세탁 방법을 옳게 설명한 것은?",
       image: "/images/quiz-1-61.webp",
-      context: "(약하게 표시)",
       options: [
         "손으로 약하게 짬",
         "약한 햇볕에 말림",

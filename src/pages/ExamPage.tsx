@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { quizzes } from "../data/quizData";
 
 export default function ExamPage() {
-  const { examId } = useParams<{ examId: string }>();
+  const { key, examId } = useParams<{ key: string; examId: string }>();
   const navigate = useNavigate();
   const exam = quizzes.find((q) => q.id === Number(examId));
 
@@ -61,7 +61,7 @@ export default function ExamPage() {
             시험을 찾을 수 없습니다
           </h1>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate(`/${key}`)}
             className="bg-secondary hover:bg-yellow-400 text-gray-800 font-bold py-2 px-6 rounded-lg">
             홈으로 돌아가기
           </button>
@@ -504,7 +504,7 @@ export default function ExamPage() {
             {/* Bottom Button */}
             <div className="p-6 pt-0">
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigate(`/${key}`)}
                 className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
                 다시 풀기
               </button>
@@ -594,7 +594,7 @@ export default function ExamPage() {
               <button
                 onClick={() => {
                   setShowAnswerSheet(false);
-                  navigate("/");
+                  navigate(`/${key}`);
                 }}
                 className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
                 다시 풀기

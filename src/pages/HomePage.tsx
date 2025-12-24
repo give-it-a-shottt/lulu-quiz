@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { quizzes } from "../data/quizData";
 
 export default function HomePage() {
+  const { key } = useParams<{ key: string }>();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -40,13 +42,13 @@ export default function HomePage() {
 
                 <div className="flex gap-2 md:gap-3 w-full md:w-auto">
                   <Link
-                    to={`/exam/${quiz.id}`}
+                    to={`/${key}/exam/${quiz.id}`}
                     className="flex-1 md:flex-initial bg-primary hover:bg-[#0284C7] text-white font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-lg md:rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-center text-sm md:text-base">
                     시험 응시
                   </Link>
 
                   <Link
-                    to={`/solution/${quiz.id}`}
+                    to={`/${key}/solution/${quiz.id}`}
                     className="flex-1 md:flex-initial bg-white hover:bg-slate-50 text-primary border-2 border-primary font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-lg md:rounded-xl transition-all duration-200 text-center text-sm md:text-base">
                     해설 보기
                   </Link>

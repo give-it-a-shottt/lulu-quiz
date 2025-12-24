@@ -248,12 +248,16 @@ export default function ExamPage() {
           <div className="flex justify-center gap-4 md:gap-8 text-xs md:text-base">
             {(() => {
               // Calculate theory score (questions 1-35, indices 0-34)
-              const theoryCorrect = answers.filter((a, i) => i <= 34 && a === exam.questions[i].answer - 1).length;
+              const theoryCorrect = answers.filter(
+                (a, i) => i <= 34 && a === exam.questions[i].answer - 1
+              ).length;
               const theoryTotal = 35;
               const theoryPass = theoryCorrect >= 21; // 60% of 35
 
               // Calculate practical score (questions 36-80, indices 35-79)
-              const practicalCorrect = answers.filter((a, i) => i >= 35 && a === exam.questions[i].answer - 1).length;
+              const practicalCorrect = answers.filter(
+                (a, i) => i >= 35 && a === exam.questions[i].answer - 1
+              ).length;
               const practicalTotal = 45;
               const practicalPass = practicalCorrect >= 27; // 60% of 45
 
@@ -262,33 +266,44 @@ export default function ExamPage() {
 
               // Determine which sections failed
               const failedSections = [];
-              if (!theoryPass) failedSections.push('필기');
-              if (!practicalPass) failedSections.push('실기');
+              if (!theoryPass) failedSections.push("필기");
+              if (!practicalPass) failedSections.push("실기");
 
               return (
                 <>
                   <div className="text-center">
                     <span className="text-slate-600 font-medium">필기</span>
-                    <span className={`ml-1 md:ml-2 font-bold ${theoryPass ? 'text-primary' : 'text-red-600'}`}>
+                    <span
+                      className={`ml-1 md:ml-2 font-bold ${
+                        theoryPass ? "text-primary" : "text-red-600"
+                      }`}>
                       {theoryCorrect}/{theoryTotal}
                     </span>
                   </div>
                   <div className="text-center">
                     <span className="text-slate-600 font-medium">실기</span>
-                    <span className={`ml-1 md:ml-2 font-bold ${practicalPass ? 'text-primary' : 'text-red-600'}`}>
+                    <span
+                      className={`ml-1 md:ml-2 font-bold ${
+                        practicalPass ? "text-primary" : "text-red-600"
+                      }`}>
                       {practicalCorrect}/{practicalTotal}
                     </span>
                   </div>
                   <div className="text-center">
                     <span className="text-slate-600 font-medium">합격여부</span>
-                    <span className={`ml-1 md:ml-2 font-bold ${overallPass ? 'text-green-600' : 'text-red-600'}`}>
-                      {overallPass ? '합격' : '불합격'}
+                    <span
+                      className={`ml-1 md:ml-2 font-bold ${
+                        overallPass ? "text-green-600" : "text-red-600"
+                      }`}>
+                      {overallPass ? "합격" : "불합격"}
                     </span>
                   </div>
                   <div className="text-center hidden md:block">
                     <span className="text-slate-600 font-medium">과락</span>
                     <span className="ml-2 font-bold text-dark">
-                      {failedSections.length > 0 ? failedSections.join(', ') : '없음'}
+                      {failedSections.length > 0
+                        ? failedSections.join(", ")
+                        : "없음"}
                     </span>
                   </div>
                 </>
@@ -350,10 +365,10 @@ export default function ExamPage() {
                       key={idx}
                       className={`flex flex-col items-center p-2 rounded-lg transition-all ${
                         idx === question.answer - 1
-                          ? 'ring-4 ring-primary bg-primary/5'
+                          ? "ring-4 ring-primary bg-primary/5"
                           : userAnswer === idx
-                          ? 'ring-4 ring-red-500 bg-red-50'
-                          : ''
+                          ? "ring-4 ring-red-500 bg-red-50"
+                          : ""
                       }`}>
                       <div className="w-full aspect-square">
                         <img
@@ -361,21 +376,22 @@ export default function ExamPage() {
                           alt={`선택지 ${idx + 1}`}
                           className={`w-full h-full object-contain rounded-lg shadow-md border-2 transition-all ${
                             idx === question.answer - 1
-                              ? 'border-primary'
+                              ? "border-primary"
                               : userAnswer === idx
-                              ? 'border-red-500'
-                              : 'border-slate-200'
+                              ? "border-red-500"
+                              : "border-slate-200"
                           }`}
                         />
                       </div>
                       <div className="mt-2 flex items-center gap-2">
-                        <span className={`font-bold ${
-                          idx === question.answer - 1
-                            ? 'text-primary'
-                            : userAnswer === idx
-                            ? 'text-red-500'
-                            : 'text-slate-700'
-                        }`}>
+                        <span
+                          className={`font-bold ${
+                            idx === question.answer - 1
+                              ? "text-primary"
+                              : userAnswer === idx
+                              ? "text-red-500"
+                              : "text-slate-700"
+                          }`}>
                           {["①", "②", "③", "④", "⑤"][idx]}
                         </span>
                         {idx === question.answer - 1 && (
@@ -401,24 +417,24 @@ export default function ExamPage() {
 
               {/* Options (only show if no images) */}
               {(!question.images || question.images.length === 0) && (
-              <div className="space-y-2 mb-6">
-                {question.options.map((option, optIndex) => (
-                  <div
-                    key={optIndex}
-                    className={`p-2 md:p-3 rounded-xl border-2 transition-all ${
-                      optIndex === question.answer - 1
-                        ? "bg-primary/5 border-primary"
-                        : "border-slate-200"
-                    }`}>
-                    <span className="text-slate-800 text-sm md:text-base">
-                      <span className="font-bold mr-2">
-                        {["①", "②", "③", "④", "⑤"][optIndex]}
+                <div className="space-y-2 mb-6">
+                  {question.options.map((option, optIndex) => (
+                    <div
+                      key={optIndex}
+                      className={`p-2 md:p-3 rounded-xl border-2 transition-all ${
+                        optIndex === question.answer - 1
+                          ? "bg-primary/5 border-primary"
+                          : "border-slate-200"
+                      }`}>
+                      <span className="text-slate-800 text-sm md:text-base">
+                        <span className="font-bold mr-2">
+                          {["①", "②", "③", "④", "⑤"][optIndex]}
+                        </span>
+                        {option}
                       </span>
-                      {option}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                    </div>
+                  ))}
+                </div>
               )}
 
               {/* Video Button */}
@@ -433,12 +449,14 @@ export default function ExamPage() {
           </div>
 
           {/* Right: Answer Sheet Sidebar - Hidden on mobile, shown on desktop */}
-          <div className="hidden lg:flex w-96 bg-dark text-white flex-col shadow-xl">
-            <div className="p-6 flex-1 overflow-y-auto">
-              <h3 className="text-center font-bold text-lg mb-6 pb-3 border-b border-white/20">
+          <div className="hidden lg:flex lg:flex-col w-96 bg-dark text-white shadow-xl">
+            <div className="p-6 pb-3">
+              <h3 className="text-center font-bold text-lg pb-3 border-b border-white/20">
                 답안 표기란
               </h3>
+            </div>
 
+            <div className="flex-1 overflow-y-auto px-6 pb-6">
               <div className="space-y-3">
                 {exam.questions.map((q, qIndex) => {
                   const qUserAnswer = answers[qIndex];
@@ -484,7 +502,7 @@ export default function ExamPage() {
             </div>
 
             {/* Bottom Button */}
-            <div className="p-6 border-t border-white/20">
+            <div className="p-6 pt-0">
               <button
                 onClick={() => navigate("/")}
                 className="w-full bg-primary hover:bg-[#0284C7] text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
@@ -1017,8 +1035,8 @@ export default function ExamPage() {
                       onClick={() => handleAnswerSelect(idx)}
                       className={`flex flex-col items-center p-2 rounded-lg transition-all ${
                         answers[currentQuestionIndex] === idx
-                          ? 'ring-4 ring-primary bg-primary/5'
-                          : 'hover:bg-gray-50'
+                          ? "ring-4 ring-primary bg-primary/5"
+                          : "hover:bg-gray-50"
                       }`}>
                       <div className="w-full aspect-square">
                         <img
@@ -1026,16 +1044,17 @@ export default function ExamPage() {
                           alt={`선택지 ${idx + 1}`}
                           className={`w-full h-full object-contain rounded-lg shadow-md border-2 transition-all ${
                             answers[currentQuestionIndex] === idx
-                              ? 'border-primary'
-                              : 'border-slate-200'
+                              ? "border-primary"
+                              : "border-slate-200"
                           }`}
                         />
                       </div>
-                      <div className={`mt-2 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-all ${
-                        answers[currentQuestionIndex] === idx
-                          ? 'border-gray-800 bg-gray-800 text-white'
-                          : 'border-gray-400 text-gray-700'
-                      }`}>
+                      <div
+                        className={`mt-2 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-all ${
+                          answers[currentQuestionIndex] === idx
+                            ? "border-gray-800 bg-gray-800 text-white"
+                            : "border-gray-400 text-gray-700"
+                        }`}>
                         {["①", "②", "③", "④", "⑤"][idx]}
                       </div>
                     </button>
@@ -1044,32 +1063,33 @@ export default function ExamPage() {
               )}
 
               {/* Options (only show if no images) */}
-              {(!currentQuestion.images || currentQuestion.images.length === 0) && (
-              <div className="space-y-2 md:space-y-3">
-                {currentQuestion.options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswerSelect(index)}
-                    className="w-full text-left flex items-center gap-3 p-3 md:p-4 hover:bg-gray-50 transition-colors rounded-lg active:bg-gray-100">
-                    <div
-                      className={`w-6 h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                        answers[currentQuestionIndex] === index
-                          ? "border-gray-800"
-                          : "border-gray-400"
-                      }`}>
-                      {answers[currentQuestionIndex] === index && (
-                        <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-800"></div>
-                      )}
-                    </div>
-                    <span className="text-gray-700 text-sm md:text-base">
-                      <span className="font-medium mr-2">
-                        {["①", "②", "③", "④", "⑤"][index]}
+              {(!currentQuestion.images ||
+                currentQuestion.images.length === 0) && (
+                <div className="space-y-2 md:space-y-3">
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswerSelect(index)}
+                      className="w-full text-left flex items-center gap-3 p-3 md:p-4 hover:bg-gray-50 transition-colors rounded-lg active:bg-gray-100">
+                      <div
+                        className={`w-6 h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                          answers[currentQuestionIndex] === index
+                            ? "border-gray-800"
+                            : "border-gray-400"
+                        }`}>
+                        {answers[currentQuestionIndex] === index && (
+                          <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-800"></div>
+                        )}
+                      </div>
+                      <span className="text-gray-700 text-sm md:text-base">
+                        <span className="font-medium mr-2">
+                          {["①", "②", "③", "④", "⑤"][index]}
+                        </span>
+                        {option}
                       </span>
-                      {option}
-                    </span>
-                  </button>
-                ))}
-              </div>
+                    </button>
+                  ))}
+                </div>
               )}
 
               {/* Navigation */}
@@ -1079,7 +1099,7 @@ export default function ExamPage() {
                     setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))
                   }
                   disabled={currentQuestionIndex === 0}
-                  className="px-4 md:px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
                   &lt; 이전
                 </button>
                 <span className="text-base md:text-lg font-bold text-gray-800">
@@ -1093,7 +1113,7 @@ export default function ExamPage() {
                     )
                   }
                   disabled={currentQuestionIndex === exam.questions.length - 1}
-                  className="px-4 md:px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base backdrop-blur-md bg-white/50 border border-white/90 rounded-lg shadow-sm hover:shadow-md transition-all">
                   다음 &gt;
                 </button>
               </div>
@@ -1231,31 +1251,31 @@ export default function ExamPage() {
 
           <div className="flex-1 overflow-y-auto px-6 pb-6">
             <div className="space-y-3">
-            {exam.questions.map((_, qIndex) => (
-              <div
-                key={qIndex}
-                onClick={() => setCurrentQuestionIndex(qIndex)}
-                className={`flex items-center gap-3 p-2 rounded-lg transition-all cursor-pointer hover:bg-white/5 ${
-                  currentQuestionIndex === qIndex ? "bg-white/10" : ""
-                }`}>
-                <div className="w-12 text-right font-bold">
-                  {String(qIndex + 1).padStart(2, "0")}
+              {exam.questions.map((_, qIndex) => (
+                <div
+                  key={qIndex}
+                  onClick={() => setCurrentQuestionIndex(qIndex)}
+                  className={`flex items-center gap-3 p-2 rounded-lg transition-all cursor-pointer hover:bg-white/5 ${
+                    currentQuestionIndex === qIndex ? "bg-white/10" : ""
+                  }`}>
+                  <div className="w-12 text-right font-bold">
+                    {String(qIndex + 1).padStart(2, "0")}
+                  </div>
+                  <div className="flex gap-2">
+                    {[0, 1, 2, 3, 4].map((optIndex) => (
+                      <div
+                        key={optIndex}
+                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
+                          answers[qIndex] === optIndex
+                            ? "bg-primary border-primary"
+                            : "border-white/30 hover:border-white/50"
+                        }`}>
+                        {optIndex + 1}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  {[0, 1, 2, 3, 4].map((optIndex) => (
-                    <div
-                      key={optIndex}
-                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm transition-all ${
-                        answers[qIndex] === optIndex
-                          ? "bg-primary border-primary"
-                          : "border-white/30 hover:border-white/50"
-                      }`}>
-                      {optIndex + 1}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
 

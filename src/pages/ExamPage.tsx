@@ -424,9 +424,17 @@ export default function ExamPage() {
                       className={`p-2 md:p-3 rounded-xl border-2 transition-all ${
                         optIndex === question.answer - 1
                           ? "bg-primary/5 border-primary"
+                          : userAnswer === optIndex
+                          ? "bg-red-50 border-red-500"
                           : "border-slate-200"
                       }`}>
-                      <span className="text-slate-800 text-sm md:text-base">
+                      <span className={`text-sm md:text-base ${
+                        optIndex === question.answer - 1
+                          ? "text-primary font-bold"
+                          : userAnswer === optIndex
+                          ? "text-red-500 font-bold"
+                          : "text-slate-800"
+                      }`}>
                         <span className="font-bold mr-2">
                           {["①", "②", "③", "④", "⑤"][optIndex]}
                         </span>
@@ -453,7 +461,7 @@ export default function ExamPage() {
                     setSolutionQuestionIndex((prev) => Math.max(0, prev - 1))
                   }
                   disabled={solutionQuestionIndex === 0}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg bg-yellow-100 hover:bg-yellow-200 border border-yellow-300 rounded-lg shadow-sm hover:shadow-md transition-all">
                   ◀ 이전
                 </button>
                 <span className="text-base md:text-xl font-bold text-dark">
@@ -467,7 +475,7 @@ export default function ExamPage() {
                     )
                   }
                   disabled={solutionQuestionIndex === exam.questions.length - 1}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg bg-yellow-100 hover:bg-yellow-200 border border-yellow-300 rounded-lg shadow-sm hover:shadow-md transition-all">
                   다음 ▶
                 </button>
               </div>
@@ -1098,7 +1106,7 @@ export default function ExamPage() {
                     setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))
                   }
                   disabled={currentQuestionIndex === 0}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg bg-yellow-100 hover:bg-yellow-200 border border-yellow-300 rounded-lg shadow-sm hover:shadow-md transition-all">
                   ◀ 이전
                 </button>
                 <span className="text-base md:text-xl font-bold text-dark">
@@ -1112,7 +1120,7 @@ export default function ExamPage() {
                     )
                   }
                   disabled={currentQuestionIndex === exam.questions.length - 1}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg bg-yellow-100 hover:bg-yellow-200 border border-yellow-300 rounded-lg shadow-sm hover:shadow-md transition-all">
                   다음 ▶
                 </button>
               </div>
@@ -1215,7 +1223,7 @@ export default function ExamPage() {
                     setCurrentQuestionIndex((prev) => Math.max(0, prev - 2))
                   }
                   disabled={currentQuestionIndex === 0}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg bg-yellow-100 hover:bg-yellow-200 border border-yellow-300 rounded-lg shadow-sm hover:shadow-md transition-all">
                   ◀ 이전
                 </button>
                 <span className="text-base md:text-xl font-bold text-dark">
@@ -1232,7 +1240,7 @@ export default function ExamPage() {
                     )
                   }
                   disabled={currentQuestionIndex >= exam.questions.length - 1}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg bg-yellow-100 hover:bg-yellow-200 border border-yellow-300 rounded-lg shadow-sm hover:shadow-md transition-all">
                   다음 ▶
                 </button>
               </div>

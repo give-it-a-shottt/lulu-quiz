@@ -220,7 +220,7 @@ export default function ExamPage() {
     const isCorrect = userAnswer === question.answer - 1;
 
     return (
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="h-screen bg-background flex flex-col">
         {/* Header */}
         <div className="bg-dark text-white py-2 md:py-3 px-4 md:px-6 shadow-lg">
           <div className="flex justify-between items-center">
@@ -315,7 +315,7 @@ export default function ExamPage() {
         {/* Main Content */}
         <div className="flex flex-1 overflow-hidden">
           {/* Left: Question Content */}
-          <div className="flex-1 px-4 md:px-6 lg:px-80 py-4 overflow-y-auto bg-white">
+          <div className="flex-1 px-4 md:px-6 lg:px-36 py-4 overflow-y-auto bg-white">
             <div>
               <div className="flex items-start gap-2 md:gap-4 mb-4">
                 <div
@@ -445,6 +445,32 @@ export default function ExamPage() {
                   문제 해설보기
                 </button>
               </div>
+
+              {/* Navigation */}
+              <div className="mt-8 flex items-center justify-center gap-4 md:gap-8">
+                <button
+                  onClick={() =>
+                    setSolutionQuestionIndex((prev) => Math.max(0, prev - 1))
+                  }
+                  disabled={solutionQuestionIndex === 0}
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  ◀ 이전
+                </button>
+                <span className="text-base md:text-xl font-bold text-dark">
+                  {String(solutionQuestionIndex + 1).padStart(2, "0")}/
+                  {String(exam.questions.length).padStart(2, "0")}
+                </span>
+                <button
+                  onClick={() =>
+                    setSolutionQuestionIndex((prev) =>
+                      Math.min(exam.questions.length - 1, prev + 1)
+                    )
+                  }
+                  disabled={solutionQuestionIndex === exam.questions.length - 1}
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  다음 ▶
+                </button>
+              </div>
             </div>
           </div>
 
@@ -456,7 +482,7 @@ export default function ExamPage() {
               </h3>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-6 pb-6">
+            <div className="flex-1 overflow-y-auto px-6 pb-6 pt-4">
               <div className="space-y-3">
                 {exam.questions.map((q, qIndex) => {
                   const qUserAnswer = answers[qIndex];
@@ -640,33 +666,6 @@ export default function ExamPage() {
           </div>
         )}
 
-        {/* Bottom Navigation */}
-        <div className="bg-white border-t border-slate-200 py-3 md:py-4 shadow-lg">
-          <div className="flex items-center justify-center gap-4 md:gap-8">
-            <button
-              onClick={() =>
-                setSolutionQuestionIndex((prev) => Math.max(0, prev - 1))
-              }
-              disabled={solutionQuestionIndex === 0}
-              className="px-4 md:px-6 py-2 text-dark hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg transition-colors">
-              ◀ 이전
-            </button>
-            <span className="text-base md:text-xl font-bold text-dark">
-              {String(solutionQuestionIndex + 1).padStart(2, "0")}/
-              {String(exam.questions.length).padStart(2, "0")}
-            </span>
-            <button
-              onClick={() =>
-                setSolutionQuestionIndex((prev) =>
-                  Math.min(exam.questions.length - 1, prev + 1)
-                )
-              }
-              disabled={solutionQuestionIndex === exam.questions.length - 1}
-              className="px-4 md:px-6 py-2 text-dark hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg transition-colors">
-              다음 ▶
-            </button>
-          </div>
-        </div>
       </div>
     );
   }
@@ -1093,16 +1092,16 @@ export default function ExamPage() {
               )}
 
               {/* Navigation */}
-              <div className="mt-8 md:mt-12 flex justify-center items-center gap-4">
+              <div className="mt-8 flex items-center justify-center gap-4 md:gap-8">
                 <button
                   onClick={() =>
                     setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))
                   }
                   disabled={currentQuestionIndex === 0}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
-                  &lt; 이전
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  ◀ 이전
                 </button>
-                <span className="text-base md:text-lg font-bold text-gray-800">
+                <span className="text-base md:text-xl font-bold text-dark">
                   {String(currentQuestionIndex + 1).padStart(2, "0")}/
                   {String(exam.questions.length).padStart(2, "0")}
                 </span>
@@ -1113,8 +1112,8 @@ export default function ExamPage() {
                     )
                   }
                   disabled={currentQuestionIndex === exam.questions.length - 1}
-                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed text-sm md:text-base backdrop-blur-md bg-white/50 border border-white/90 rounded-lg shadow-sm hover:shadow-md transition-all">
-                  다음 &gt;
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  다음 ▶
                 </button>
               </div>
             </div>
@@ -1210,16 +1209,16 @@ export default function ExamPage() {
               </div>
 
               {/* Navigation */}
-              <div className="mt-12 flex justify-center items-center gap-4">
+              <div className="mt-8 flex items-center justify-center gap-4 md:gap-8">
                 <button
                   onClick={() =>
                     setCurrentQuestionIndex((prev) => Math.max(0, prev - 2))
                   }
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed">
-                  &lt; 이전
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  ◀ 이전
                 </button>
-                <span className="text-lg font-bold text-gray-800">
+                <span className="text-base md:text-xl font-bold text-dark">
                   {String(currentQuestionIndex + 1).padStart(2, "0")}-
                   {String(
                     Math.min(currentQuestionIndex + 2, exam.questions.length)
@@ -1233,8 +1232,8 @@ export default function ExamPage() {
                     )
                   }
                   disabled={currentQuestionIndex >= exam.questions.length - 1}
-                  className="px-6 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed">
-                  다음 &gt;
+                  className="px-4 md:px-6 py-2 text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-sm md:text-lg backdrop-blur-md bg-white/50 border border-white/60 rounded-lg shadow-sm hover:shadow-md transition-all">
+                  다음 ▶
                 </button>
               </div>
             </div>

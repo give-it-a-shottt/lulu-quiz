@@ -7,11 +7,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 임의 키 경로도 홈으로 */}
+        {/* 임의 키 경로*/}
         <Route path="/:key" element={<HomePage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/exam/:examId" element={<ExamPage />} />
-        <Route path="/solution/:examId" element={<SolutionPage />} />
+        <Route path="/:key/exam/:examId" element={<ExamPage />} />
+        <Route path="/:key/solution/:examId" element={<SolutionPage />} />
       </Routes>
     </BrowserRouter>
   );
